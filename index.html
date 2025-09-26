@@ -3,146 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chat Interface</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F8F9FA;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        #chat-container {
-            width: 80%;
-            max-width: 600px;
-            height: 80%;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        #messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            padding: 10px;
-        }
-        .message {
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            max-width: 70%;
-        }
-        .user-message {
-            background-color: #5A9CFF;
-            color: white;
-            align-self: flex-end;
-            margin-left: auto;
-        }
-        .ai-message {
-            background-color: #E9ECEF;
-            color: #333;
-            align-self: flex-start;
-        }
-        #chat-form {
-            display: flex;
-            gap: 10px;
-        }
-        #user-input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #CCC;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #5A9CFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #4A8CFF;
-        }
-    </style>
+    <title>PEARL - AI Medical Assistant</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="chat-container">
         <div id="messages"></div>
+        <div id="typing-indicator" class="hidden">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <form id="chat-form">
-            <input type="text" id="user-input" placeholder="Type your message..." required>
+            <input type="text" id="user-input" placeholder="Ask PEARL a question..." required>
             <button type="submit">Send</button>
         </form>
     </div>
-    <script>
-        const form = document.getElementById('chat-form');
-        const input = document.getElementById('user-input');
-        const messages = document.getElementById('messages');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const userMessage = input.value.trim();
-            if (!userMessage) return;
-
-            // Display user message
-            const userMsgDiv = document.createElement('div');
-            userMsgDiv.className = 'message user-message';
-            userMsgDiv.textContent = userMessage;
-            messages.appendChild(userMsgDiv);
-            input.value = '';
-
-            // Scroll to bottom
-            messages.scrollTop = messages.scrollHeight;
-
-            try {
-                // API call to local Ollama
-                const response = await fetch('http://localhost:11434/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        model: 'llama3',
-                        prompt: userMessage,
-                        stream: false
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('API request failed');
-                }
-
-                const data = await response.json();
-                const aiMessage = data.response;
-
-                // Display AI message
-                const aiMsgDiv = document.createElement('div');
-                aiMsgDiv.className = 'message ai-message';
-                aiMsgDiv.textContent = aiMessage;
-                messages.appendChild(aiMsgDiv);
-
-                // Scroll to bottom
-                messages.scrollTop = messages.scrollHeight;
-            } catch (error) {
-                console.error('Error:', error);
-                const errorMsgDiv = document.createElement('div');
-                errorMsgDiv.className = 'message ai-message';
-                errorMsgDiv.textContent = 'Sorry, there was an error processing your request.';
-                messages.appendChild(errorMsgDiv);
-                messages.scrollTop = messages.scrollHeight;
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
