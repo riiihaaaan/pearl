@@ -67,6 +67,27 @@ body::before {
     animation: glow 3s ease-in-out infinite alternate;
 }
 
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+header img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #5A9CFF;
+    margin: 0;
+}
+
 @keyframes glow {
     from {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -91,6 +112,8 @@ body::before {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.5s ease-out forwards;
+    word-wrap: break-word;
+    line-height: 1.4;
 }
 
 @keyframes fadeInUp {
@@ -111,6 +134,20 @@ body::before {
     background-color: #E9ECEF;
     color: #333;
     align-self: flex-start;
+}
+
+.ai-message ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.ai-message li {
+    margin-bottom: 5px;
+}
+
+.ai-message strong {
+    font-weight: bold;
+    color: #5A9CFF;
 }
 
 #typing-indicator {
@@ -177,4 +214,5 @@ button {
 
 button:hover {
     background-color: #4A8CFF;
+    transform: scale(1.05);
 }
